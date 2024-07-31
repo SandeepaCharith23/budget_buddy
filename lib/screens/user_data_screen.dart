@@ -1,3 +1,5 @@
+import 'package:budget_buddy/screens/main_screen.dart';
+import 'package:budget_buddy/services/user_services.dart';
 import 'package:budget_buddy/utils/colors.dart';
 import 'package:budget_buddy/widgets/custom_button01.dart';
 import 'package:flutter/foundation.dart';
@@ -207,11 +209,11 @@ class _UserDataScreenState extends State<UserDataScreen> {
 
                       Center(
                         child: GestureDetector(
-                          onTap: () {
+                          onTap: () async {
                             if (_formKey.currentState!.validate()) {
                               //form is validated
 
-                              //get the values
+                              //1.get the values
                               String enteredUserName = _userNameController.text;
                               String enteredUserEmail =
                                   _userEmailController.text;
@@ -223,6 +225,27 @@ class _UserDataScreenState extends State<UserDataScreen> {
                               if (kDebugMode) {
                                 print(
                                     "$enteredUserName,$enteredUserEmail,$enteredUserPassword,$enteredUserPasswordConfirm");
+                              }
+
+                              //2.store user details using shared preferences
+                              await UserServices.storeUserDetails(
+                                userName: enteredUserName,
+                                userEmail: enteredUserEmail,
+                                userPassword: enteredUserPassword,
+                                userPasswordConfirm: enteredUserPasswordConfirm,
+                                context: context,
+                              );
+
+                              if (context.mounted) {
+                                //3.Navigate to the main Dashbaord
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return const MainScreen();
+                                    },
+                                  ),
+                                );
                               }
                             }
                           },
