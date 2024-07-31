@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserServices {
-  //create a method for storing user details
+  //1.create a method for storing user details
   static Future<void> storeUserDetails(
       {required String userName,
       required String userEmail,
@@ -46,5 +46,14 @@ class UserServices {
     } catch (err) {
       err.toString();
     }
+  }
+
+  //2.Method for checking that username already saved  or not
+  static Future<bool> checkusername() async {
+    //a.create an insatance of sharedPreference
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String? savedusername = sharedPreferences.getString("username");
+    return savedusername != null;
   }
 }
