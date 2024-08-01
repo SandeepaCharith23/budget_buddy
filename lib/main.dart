@@ -1,4 +1,3 @@
-import 'package:budget_buddy/screens/onboarding_screen.dart';
 import 'package:budget_buddy/services/user_services.dart';
 import 'package:budget_buddy/widgets/wrapper.dart';
 import 'package:flutter/material.dart';

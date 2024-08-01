@@ -31,6 +31,7 @@ class UserServices {
 
       //b.Set values to sharedpreference instance
       await sharedPreferences.setString("username", userName);
+      await sharedPreferences.setString("useremail", userEmail);
       await sharedPreferences.setString("userpassword", userPassword);
 
       //c.Show a msg to user
@@ -55,5 +56,16 @@ class UserServices {
 
     String? savedusername = sharedPreferences.getString("username");
     return savedusername != null;
+  }
+
+  //3.Method for returning saved User Name and Email Address
+  static Future<Map<String, String>> userDetails() async {
+    //a.create an insatance of sharedPreference
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String? username = sharedPreferences.getString("username");
+    String? useremail = sharedPreferences.getString("useremail");
+
+    return {"username": username!, "useremail": useremail!};
   }
 }
