@@ -5,7 +5,7 @@ import 'package:budget_buddy/widgets/custom_button01.dart';
 import 'package:budget_buddy/widgets/custom_button02.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:intl/intl.dart';
 
 class AddnewScreen extends StatefulWidget {

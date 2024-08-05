@@ -31,6 +31,32 @@ class Income {
       required this.incomeCategory,
       required this.incomeDate,
       required this.incomeTime});
+
+  //A method for convert dart object to Json Object
+  Map<String, dynamic> toJSON() {
+    return {
+      'incomeTitle': incomeTitle,
+      'incomeId': incomeId,
+      'incomeDescription': incomeDescription,
+      'incomeAmount': incomeAmount,
+      'incomeCategory': incomeCategory.index,
+      'incomeDate': incomeDate.toIso8601String(),
+      'incomeTime': incomeTime.toIso8601String(),
+    };
+  }
+
+  // A method to convert json object to dart object
+  factory Income.fromJSON(Map<String, dynamic> json) {
+    return Income(
+      incomeTitle: json['incomeTitle'],
+      incomeId: json['incomeId'],
+      incomeDescription: json['incomeDescription'],
+      incomeAmount: json['incomeAmount'],
+      incomeCategory: IncomeCategory.values[json['incomeCategory']],
+      incomeDate: DateTime.parse(json['incomeDate']),
+      incomeTime: DateTime.parse(json['incomeTime']),
+    );
+  }
 }
 
 //category images

@@ -30,6 +30,32 @@ class Expense {
       required this.expenseDescription,
       required this.expenseDate,
       required this.expenseTime});
+
+  // A method to convert Dart object to Json object
+  Map<String, dynamic> toJSON() {
+    return {
+      'expenseId': expenseId,
+      'expenseTitle': expenseTitle,
+      'expenseAmount': expenseAmount,
+      'expenseCategory': expenseCategory.index,
+      'expenseDescription': expenseDescription,
+      'expenseDate': expenseDate.toIso8601String(),
+      'expenseTime': expenseTime.toIso8601String(),
+    };
+  }
+
+  //A method to convert Json object to Dart object
+  factory Expense.fromJSON(Map<String, dynamic> json) {
+    return Expense(
+      expenseId: json['expenseId'],
+      expenseTitle: json['expenseTitle'],
+      expenseAmount: json['expenseAmount'],
+      expenseCategory: ExpenseCategory.values[json['expenseCategory']],
+      expenseDescription: json['expenseDescription'],
+      expenseDate: DateTime.parse(json['expenseDate']),
+      expenseTime: DateTime.parse(json['expenseTime']),
+    );
+  }
 }
 
 final Map<ExpenseCategory, String> expensecategoryImages = {
