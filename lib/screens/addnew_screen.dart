@@ -1,5 +1,12 @@
+import 'package:budget_buddy/models/expense_model.dart';
+import 'package:budget_buddy/models/income_model.dart';
 import 'package:budget_buddy/utils/colors.dart';
+import 'package:budget_buddy/widgets/custom_button01.dart';
+import 'package:budget_buddy/widgets/custom_button02.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 class AddnewScreen extends StatefulWidget {
   const AddnewScreen({super.key});
@@ -11,6 +18,28 @@ class AddnewScreen extends StatefulWidget {
 class _AddnewScreenState extends State<AddnewScreen> {
   //track the selected item-Expense or Category
   int _selecteditem = 0;
+
+  //A variable for saved selected category
+  ExpenseCategory expenseCategory =
+      ExpenseCategory.miscellaneous; //default value;
+  IncomeCategory incomeCategory = IncomeCategory.miscellaneous;
+
+  //TextEditing Controllers
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController amountController = TextEditingController();
+
+  //Variable for selecting Date and Time
+  DateTime selectedDate = DateTime.now();
+  DateTime selecteTime = DateTime.now();
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    amountController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,18 +128,292 @@ class _AddnewScreenState extends State<AddnewScreen> {
                     ),
                   ),
                 ),
+                //Expense or Income Total display section
+                Container(
+                  margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.1,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _selecteditem == 0
+                            ? "Expense Amount "
+                            : "Income Amount",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: kWhite,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const TextField(
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: kWhite,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: "Rs 0.00",
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: kWhite,
+                          ),
+                        ),
+                      ),
 
+                      //Expense or Income details section
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.015),
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        decoration: const BoxDecoration(
+                          color: kWhite,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Form(
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                //category selector dropdown
+                                DropdownButtonFormField(
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 10,
+                                      horizontal: 10,
+                                    ),
+                                  ),
+                                  items: _selecteditem == 0
+                                      ? ExpenseCategory.values.map((category) {
+                                          return DropdownMenuItem(
+                                            value: category,
+                                            alignment:
+                                                AlignmentDirectional.center,
+                                            child: Text(category.name),
+                                          );
+                                        }).toList()
+                                      : IncomeCategory.values.map((category) {
+                                          return DropdownMenuItem(
+                                            value: category,
+                                            alignment:
+                                                AlignmentDirectional.center,
+                                            child: Text(category.name),
+                                          );
+                                        }).toList(),
+                                  hint: const Text("Selected a category"),
+                                  value: _selecteditem == 0
+                                      ? expenseCategory
+                                      : incomeCategory,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selecteditem == 0
+                                          ? expenseCategory =
+                                              value as ExpenseCategory
+                                          : incomeCategory =
+                                              value as IncomeCategory;
+
+                                      if (kDebugMode) {
+                                        print(
+                                          _selecteditem == 0
+                                              ? expenseCategory
+                                              : incomeCategory,
+                                        );
+                                      }
+                                    });
+                                  },
+                                ),
+
+                                const SizedBox(
+                                  height: 10,
+                                ),
+
+                                //title textfield
+                                TextFormField(
+                                  controller: titleController,
+                                  decoration: InputDecoration(
+                                    hintText: "Title",
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 10,
+                                      horizontal: 10,
+                                    ),
+                                  ),
+                                ),
+
+                                const SizedBox(
+                                  height: 10,
+                                ),
+
+                                //Description textfield
+                                TextFormField(
+                                  controller: descriptionController,
+                                  decoration: InputDecoration(
+                                    hintText: "Description",
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 10,
+                                      horizontal: 10,
+                                    ),
+                                  ),
+                                ),
+
+                                const SizedBox(
+                                  height: 10,
+                                ),
+
+                                //Amount textfield
+                                TextFormField(
+                                  controller: amountController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    hintText: "Amount",
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 10,
+                                      horizontal: 10,
+                                    ),
+                                  ),
+                                ),
+
+                                //Select Date and Select Time text fields
+                                const SizedBox(
+                                  height: 10,
+                                ),
+
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDatePicker(
+                                          context: context,
+                                          initialDate: DateTime.now(),
+                                          firstDate: DateTime(1992),
+                                          lastDate: DateTime(2050),
+                                        ).then((value) {
+                                          if (value != null) {
+                                            setState(() {
+                                              selectedDate = value;
+                                              if (kDebugMode) {
+                                                print(selectedDate);
+                                              }
+                                            });
+                                          }
+                                        });
+                                      },
+                                      child: CustomButton02(
+                                        buttonLableName: "Select Date",
+                                        buttonBackgroundColor:
+                                            _selecteditem == 0
+                                                ? kMainColor
+                                                : kGreen,
+                                        buttonLableColor: kWhite,
+                                        buttonIcon: Icons.calendar_today,
+                                      ),
+                                    ),
+                                    Text(
+                                      DateFormat.yMMMd().format(selectedDate),
+                                      style: const TextStyle(
+                                        color: kGrey,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                const SizedBox(
+                                  height: 10,
+                                ),
+
+                                //a row for selecting Time
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.now(),
+                                        ).then((value) {
+                                          if (value != null) {
+                                            setState(() {
+                                              selecteTime = DateTime(
+                                                selectedDate.year,
+                                                selectedDate.month,
+                                                selectedDate.day,
+                                                value.hour,
+                                                value.minute,
+                                              );
+                                            });
+                                          }
+                                        });
+                                      },
+                                      child: CustomButton02(
+                                        buttonLableName: "Select Time",
+                                        buttonBackgroundColor:
+                                            _selecteditem == 0
+                                                ? kMainColor
+                                                : kGreen,
+                                        buttonLableColor: kWhite,
+                                        buttonIcon: Icons.alarm,
+                                      ),
+                                    ),
+                                    Text(
+                                      DateFormat.jm().format(selecteTime),
+                                      style: const TextStyle(
+                                        color: kGrey,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                const SizedBox(
+                                  height: 10,
+                                ),
+
+                                const Divider(),
+                                Center(
+                                  child: CustomButton01(
+                                      buttonLableName: _selecteditem == 0
+                                          ? "Add Expense"
+                                          : "Add Income",
+                                      buttonBackgroundColor: _selecteditem == 0
+                                          ? kMainColor
+                                          : kGreen,
+                                      buttonLableColor: kWhite),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
                 //Expense or Income display section
-                // Positioned(
-                //   child: Container(
-                //     width: MediaQuery.of(context).size.width,
-                //     height: MediaQuery.of(context).size.height * 0.5,
-                //     decoration: BoxDecoration(
-                //       color: kWhite,
-                //       borderRadius: BorderRadius.circular(20),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
