@@ -1,5 +1,6 @@
 import 'package:budget_buddy/models/expense_model.dart';
 import 'package:budget_buddy/models/income_model.dart';
+import 'package:budget_buddy/services/expense_services.dart';
 import 'package:budget_buddy/utils/colors.dart';
 import 'package:budget_buddy/widgets/custom_button01.dart';
 import 'package:budget_buddy/widgets/custom_button02.dart';
@@ -9,7 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AddnewScreen extends StatefulWidget {
-  const AddnewScreen({super.key});
+  final Function(Expense) addExpense;
+  const AddnewScreen({super.key, required this.addExpense});
 
   @override
   State<AddnewScreen> createState() => _AddnewScreenState();
@@ -25,9 +27,9 @@ class _AddnewScreenState extends State<AddnewScreen> {
   IncomeCategory incomeCategory = IncomeCategory.miscellaneous;
 
   //TextEditing Controllers
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController amountController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
 
   //Variable for selecting Date and Time
   DateTime selectedDate = DateTime.now();
@@ -35,9 +37,9 @@ class _AddnewScreenState extends State<AddnewScreen> {
 
   @override
   void dispose() {
-    titleController.dispose();
-    descriptionController.dispose();
-    amountController.dispose();
+    _titleController.dispose();
+    _descriptionController.dispose();
+    _amountController.dispose();
     super.dispose();
   }
 
@@ -242,7 +244,7 @@ class _AddnewScreenState extends State<AddnewScreen> {
 
                                 //title textfield
                                 TextFormField(
-                                  controller: titleController,
+                                  controller: _titleController,
                                   decoration: InputDecoration(
                                     hintText: "Title",
                                     border: OutlineInputBorder(
@@ -261,7 +263,7 @@ class _AddnewScreenState extends State<AddnewScreen> {
 
                                 //Description textfield
                                 TextFormField(
-                                  controller: descriptionController,
+                                  controller: _descriptionController,
                                   decoration: InputDecoration(
                                     hintText: "Description",
                                     border: OutlineInputBorder(
@@ -280,7 +282,7 @@ class _AddnewScreenState extends State<AddnewScreen> {
 
                                 //Amount textfield
                                 TextFormField(
-                                  controller: amountController,
+                                  controller: _amountController,
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     hintText: "Amount",
@@ -395,15 +397,51 @@ class _AddnewScreenState extends State<AddnewScreen> {
                                 ),
 
                                 const Divider(),
+
+                                //Button
                                 Center(
-                                  child: CustomButton01(
-                                      buttonLableName: _selecteditem == 0
-                                          ? "Add Expense"
-                                          : "Add Income",
-                                      buttonBackgroundColor: _selecteditem == 0
-                                          ? kMainColor
-                                          : kGreen,
-                                      buttonLableColor: kWhite),
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      //save the user entered details in to Shared Preferences
+                                      //1.load the existing expenses in the shared preferences and get the lenght and build the expense id according to the length
+                                      List<Expense> loadedExpenses =
+                                          await ExpenseServices()
+                                              .loadExpenses();
+                                      if (kDebugMode) {
+                                        // ignore: prefer_interpolation_to_compose_strings
+                                        print(
+                                            "loaded Expenses ${loadedExpenses.length}");
+                                      }
+
+                                      //create a Expense from user entered data
+                                      Expense expense = Expense(
+                                        expenseId: loadedExpenses.length + 1,
+                                        expenseTitle: _titleController.text,
+                                        expenseAmount:
+                                            _amountController.text.isEmpty
+                                                ? 0
+                                                : double.parse(
+                                                    _amountController.text),
+                                        expenseCategory: expenseCategory,
+                                        expenseDescription:
+                                            _descriptionController.text,
+                                        expenseDate: selectedDate,
+                                        expenseTime: selecteTime,
+                                      );
+
+                                      //save expense objects
+                                      widget.addExpense(expense);
+                                    },
+                                    child: CustomButton01(
+                                        buttonLableName: _selecteditem == 0
+                                            ? "Add Expense"
+                                            : "Add Income",
+                                        buttonBackgroundColor:
+                                            _selecteditem == 0
+                                                ? kMainColor
+                                                : kGreen,
+                                        buttonLableColor: kWhite),
+                                  ),
                                 ),
                               ],
                             ),
