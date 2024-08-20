@@ -207,7 +207,12 @@ class _AddnewScreenState extends State<AddnewScreen> {
                                             value: category,
                                             alignment:
                                                 AlignmentDirectional.center,
-                                            child: Text(category.name),
+                                            child: Text(
+                                              category.name,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
                                           );
                                         }).toList()
                                       : IncomeCategory.values.map((category) {
@@ -215,7 +220,12 @@ class _AddnewScreenState extends State<AddnewScreen> {
                                             value: category,
                                             alignment:
                                                 AlignmentDirectional.center,
-                                            child: Text(category.name),
+                                            child: Text(
+                                              category.name,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
                                           );
                                         }).toList(),
                                   hint: const Text("Selected a category"),
@@ -248,14 +258,18 @@ class _AddnewScreenState extends State<AddnewScreen> {
                                 //title textfield
                                 TextFormField(
                                   controller: _titleController,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                   decoration: InputDecoration(
                                     hintText: "Title",
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(100),
                                     ),
                                     contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 10,
-                                      horizontal: 10,
+                                      vertical: 15,
+                                      horizontal: 15,
                                     ),
                                   ),
                                 ),
@@ -267,14 +281,18 @@ class _AddnewScreenState extends State<AddnewScreen> {
                                 //Description textfield
                                 TextFormField(
                                   controller: _descriptionController,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                   decoration: InputDecoration(
                                     hintText: "Description",
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(100),
                                     ),
                                     contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 10,
-                                      horizontal: 10,
+                                      vertical: 15,
+                                      horizontal: 15,
                                     ),
                                   ),
                                 ),
@@ -286,6 +304,10 @@ class _AddnewScreenState extends State<AddnewScreen> {
                                 //Amount textfield
                                 TextFormField(
                                   controller: _amountController,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     hintText: "Amount",
@@ -293,8 +315,8 @@ class _AddnewScreenState extends State<AddnewScreen> {
                                       borderRadius: BorderRadius.circular(100),
                                     ),
                                     contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 10,
-                                      horizontal: 10,
+                                      vertical: 15,
+                                      horizontal: 15,
                                     ),
                                   ),
                                 ),
