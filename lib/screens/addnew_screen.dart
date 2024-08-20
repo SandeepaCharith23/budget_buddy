@@ -1,6 +1,7 @@
 import 'package:budget_buddy/models/expense_model.dart';
 import 'package:budget_buddy/models/income_model.dart';
 import 'package:budget_buddy/services/expense_services.dart';
+import 'package:budget_buddy/services/income_services.dart';
 import 'package:budget_buddy/utils/colors.dart';
 import 'package:budget_buddy/widgets/custom_button01.dart';
 import 'package:budget_buddy/widgets/custom_button02.dart';
@@ -11,7 +12,9 @@ import 'package:intl/intl.dart';
 
 class AddnewScreen extends StatefulWidget {
   final Function(Expense) addExpense;
-  const AddnewScreen({super.key, required this.addExpense});
+  final Function(Income) addIncome;
+  const AddnewScreen(
+      {super.key, required this.addExpense, required this.addIncome});
 
   @override
   State<AddnewScreen> createState() => _AddnewScreenState();
@@ -403,34 +406,74 @@ class _AddnewScreenState extends State<AddnewScreen> {
                                   child: GestureDetector(
                                     onTap: () async {
                                       //save the user entered details in to Shared Preferences
-                                      //1.load the existing expenses in the shared preferences and get the lenght and build the expense id according to the length
-                                      List<Expense> loadedExpenses =
-                                          await ExpenseServices()
-                                              .loadExpenses();
-                                      if (kDebugMode) {
-                                        // ignore: prefer_interpolation_to_compose_strings
-                                        print(
-                                            "loaded Expenses ${loadedExpenses.length}");
+
+                                      //track whether is this a expense or income
+                                      if (_selecteditem == 0) {
+                                        //1.load the existing expenses in the shared preferences and get the lenght and build the expense id according to the length
+                                        List<Expense> loadedExpenses =
+                                            await ExpenseServices()
+                                                .loadExpenses();
+                                        if (kDebugMode) {
+                                          // ignore: prefer_interpolation_to_compose_strings
+                                          print(
+                                              "loaded Expenses ${loadedExpenses.length}");
+                                        }
+
+                                        //create a Expense from user entered data
+                                        Expense expense = Expense(
+                                          expenseId: loadedExpenses.length + 1,
+                                          expenseTitle: _titleController.text,
+                                          expenseAmount:
+                                              _amountController.text.isEmpty
+                                                  ? 0
+                                                  : double.parse(
+                                                      _amountController.text),
+                                          expenseCategory: expenseCategory,
+                                          expenseDescription:
+                                              _descriptionController.text,
+                                          expenseDate: selectedDate,
+                                          expenseTime: selecteTime,
+                                        );
+
+                                        //save expense objects
+                                        widget.addExpense(expense);
+
+                                        //clear the the fields
+                                        _titleController.clear();
+                                        _amountController.clear();
+                                        _descriptionController.clear();
+                                      } else {
+                                        //add a Income
+
+                                        //load existing incomes
+                                        List<Income> loadedIncomes =
+                                            await IncomeServices()
+                                                .loadingIncome();
+
+                                        //create the new income
+                                        Income newincome = Income(
+                                          incomeTitle: _titleController.text,
+                                          incomeId: loadedIncomes.length + 1,
+                                          incomeDescription:
+                                              _descriptionController.text,
+                                          incomeAmount:
+                                              _amountController.text.isEmpty
+                                                  ? 0
+                                                  : double.parse(
+                                                      _amountController.text),
+                                          incomeCategory: incomeCategory,
+                                          incomeDate: selectedDate,
+                                          incomeTime: selecteTime,
+                                        );
+
+                                        //call for addnewIncome
+                                        widget.addIncome(newincome);
+
+                                        //clear textFields
+                                        _titleController.clear();
+                                        _amountController.clear();
+                                        _descriptionController.clear();
                                       }
-
-                                      //create a Expense from user entered data
-                                      Expense expense = Expense(
-                                        expenseId: loadedExpenses.length + 1,
-                                        expenseTitle: _titleController.text,
-                                        expenseAmount:
-                                            _amountController.text.isEmpty
-                                                ? 0
-                                                : double.parse(
-                                                    _amountController.text),
-                                        expenseCategory: expenseCategory,
-                                        expenseDescription:
-                                            _descriptionController.text,
-                                        expenseDate: selectedDate,
-                                        expenseTime: selecteTime,
-                                      );
-
-                                      //save expense objects
-                                      widget.addExpense(expense);
                                     },
                                     child: CustomButton01(
                                         buttonLableName: _selecteditem == 0

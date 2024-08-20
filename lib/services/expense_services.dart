@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ExpenseServices {
 //1.List of Expense
-  final List<Expense> _expenseList = [];
+  // final List<Expense> _expenseList = [];
 
 //2.create a key for get values
   static const String _expenseKey = 'expenses';

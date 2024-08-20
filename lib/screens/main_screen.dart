@@ -1,10 +1,12 @@
 import 'package:budget_buddy/models/expense_model.dart';
+import 'package:budget_buddy/models/income_model.dart';
 import 'package:budget_buddy/screens/addnew_screen.dart';
 import 'package:budget_buddy/screens/budget_screen.dart';
 import 'package:budget_buddy/screens/home_screen.dart';
 import 'package:budget_buddy/screens/profile_screen.dart';
 import 'package:budget_buddy/screens/transactions_screen.dart';
 import 'package:budget_buddy/services/expense_services.dart';
+import 'package:budget_buddy/services/income_services.dart';
 import 'package:budget_buddy/utils/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +25,20 @@ class _MainScreenState extends State<MainScreen> {
   //A place for saving all sharedPreferences in to new place
   List<Expense> expenseList = [];
 
+  List<Income> incomeList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      //call for fetchAllExpenses at the beginnig
+      fetchAllExpenses();
+
+      //call for fetchAllIncomes at the beginning
+      fetchAllIncomes();
+    });
+  }
+
   //A method for fetch expenses
   void fetchAllExpenses() async {
     List<Expense> loadedExpenses = await ExpenseServices().loadExpenses();
@@ -30,7 +46,20 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       expenseList = loadedExpenses;
       if (kDebugMode) {
-        print("expense list lenght in fetchallmethod ${expenseList.length}");
+        print(
+            "expense list lenght in fetchallmethod at the beginning ${expenseList.length}");
+      }
+    });
+  }
+
+  //A method for fetch all incomes
+  void fetchAllIncomes() async {
+    List<Income> loadedIncomes = await IncomeServices().loadingIncome();
+    setState(() {
+      incomeList = loadedIncomes;
+      if (kDebugMode) {
+        print(
+            "income list lenght in fetchallmethod at the beginning ${incomeList.length}");
       }
     });
   }
@@ -43,15 +72,23 @@ class _MainScreenState extends State<MainScreen> {
     //update expense list
     setState(() {
       expenseList.add(newExpense);
+      if (kDebugMode) {
+        print("Expenses amount after add new Expense ${expenseList.length}");
+      }
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
+  //A method for add new Income
+  void addNewIncome(Income newIncome) {
+    //save new income
+    IncomeServices().saveIncome(newIncome, context);
+
+    //update incomeList
     setState(() {
-      //call for fetchAllExpenses at the beginnig
-      fetchAllExpenses();
+      incomeList.add(newIncome);
+      if (kDebugMode) {
+        print("Incomes amount after add new Income ${incomeList.length}");
+      }
     });
   }
 
@@ -63,6 +100,7 @@ class _MainScreenState extends State<MainScreen> {
       const TransactionScreen(),
       AddnewScreen(
         addExpense: addNewExpense,
+        addIncome: addNewIncome,
       ),
       const BudgetScreen(),
       const ProfileScreen(),

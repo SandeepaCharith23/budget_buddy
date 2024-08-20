@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           "Welcome ${savedusername.toUpperCase()}",
                           style: const TextStyle(
                             fontFamily: "Inter",
-                            fontSize: 16,
+                            fontSize: 10,
                             color: kWhite,
                             fontWeight: FontWeight.bold,
                           ),
