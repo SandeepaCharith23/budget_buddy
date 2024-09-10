@@ -36,7 +36,7 @@ class _AddnewScreenState extends State<AddnewScreen> {
 
   //Variable for selecting Date and Time
   DateTime selectedDate = DateTime.now();
-  DateTime selecteTime = DateTime.now();
+  DateTime selectedTime = DateTime.now();
 
   @override
   void dispose() {
@@ -385,7 +385,7 @@ class _AddnewScreenState extends State<AddnewScreen> {
                                         ).then((value) {
                                           if (value != null) {
                                             setState(() {
-                                              selecteTime = DateTime(
+                                              selectedTime = DateTime(
                                                 selectedDate.year,
                                                 selectedDate.month,
                                                 selectedDate.day,
@@ -407,7 +407,7 @@ class _AddnewScreenState extends State<AddnewScreen> {
                                       ),
                                     ),
                                     Text(
-                                      DateFormat.jm().format(selecteTime),
+                                      DateFormat.jm().format(selectedTime),
                                       style: const TextStyle(
                                         color: kGrey,
                                         fontSize: 10,
@@ -454,7 +454,7 @@ class _AddnewScreenState extends State<AddnewScreen> {
                                           expenseDescription:
                                               _descriptionController.text,
                                           expenseDate: selectedDate,
-                                          expenseTime: selecteTime,
+                                          expenseTime: selectedTime,
                                         );
 
                                         //save expense objects
@@ -485,11 +485,16 @@ class _AddnewScreenState extends State<AddnewScreen> {
                                                       _amountController.text),
                                           incomeCategory: incomeCategory,
                                           incomeDate: selectedDate,
-                                          incomeTime: selecteTime,
+                                          incomeTime: selectedTime,
                                         );
 
                                         //call for addnewIncome
                                         widget.addIncome(newincome);
+
+                                        if (kDebugMode) {
+                                          print("Date is $selectedDate");
+                                          print("Time is $selectedTime");
+                                        }
 
                                         //clear textFields
                                         _titleController.clear();

@@ -105,13 +105,14 @@ class _MainScreenState extends State<MainScreen> {
     //pages List
     final List<Widget> pages = [
       const HomeScreen(),
-      AddnewScreen(
-        addExpense: addNewExpense,
-        addIncome: addNewIncome,
-      ),
       TransactionScreen(
         expenseList: expenseList,
         onDismissedExpense: removeExpense,
+        incomeList: incomeList,
+      ),
+      AddnewScreen(
+        addExpense: addNewExpense,
+        addIncome: addNewIncome,
       ),
       const BudgetScreen(),
       const ProfileScreen(),

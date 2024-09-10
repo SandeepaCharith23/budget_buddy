@@ -72,7 +72,7 @@ final Map<ExpenseCategory, String> expensecategoryImages = {
 };
 
 final Map<ExpenseCategory, Color> expensecategoryColrs = {
-  ExpenseCategory.education: const Color(0xFF000000),
+  ExpenseCategory.education: const Color(0xFFB9ACE8),
   ExpenseCategory.entertainmentandRecreation: const Color(0xFF000000),
   ExpenseCategory.foods: const Color(0xFF000000),
   ExpenseCategory.giftsandDonations: const Color(0xFF000000),

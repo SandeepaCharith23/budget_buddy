@@ -1,29 +1,29 @@
-import 'package:budget_buddy/models/expense_model.dart';
+import 'package:budget_buddy/models/income_model.dart';
 import 'package:budget_buddy/utils/colors.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
 
-class ExpenseCard extends StatefulWidget {
-  final String expenseTitle, expenseDescription;
-  final ExpenseCategory expenseCategory;
-  final double expenseAmount;
-  final DateTime expensedate, expensetime;
-  const ExpenseCard(
+class IncomeCard extends StatefulWidget {
+  final String incomeTitle, incomeDescription;
+  final IncomeCategory incomeCategory;
+  final double incomeAmount;
+  final DateTime incomedate, incometime;
+  const IncomeCard(
       {super.key,
-      required this.expenseTitle,
-      required this.expenseDescription,
-      required this.expenseAmount,
-      required this.expenseCategory,
-      required this.expensedate,
-      required this.expensetime});
+      required this.incomeTitle,
+      required this.incomeDescription,
+      required this.incomeAmount,
+      required this.incomeCategory,
+      required this.incomedate,
+      required this.incometime});
 
   @override
-  State<ExpenseCard> createState() => _ExpenseCardState();
+  State<IncomeCard> createState() => _IncomeCardState();
 }
 
-class _ExpenseCardState extends State<ExpenseCard> {
+class _IncomeCardState extends State<IncomeCard> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -53,14 +53,14 @@ class _ExpenseCardState extends State<ExpenseCard> {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: expensecategoryColrs[widget.expenseCategory]!
+                    color: incomeCategoryColors[widget.incomeCategory]!
                         .withOpacity(0.4),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Image.asset(
-                      expensecategoryImages[widget.expenseCategory]!,
+                      incomeCategoryImages[widget.incomeCategory]!,
                       width: 40,
                       height: 40,
                       fit: BoxFit.cover,
@@ -74,7 +74,7 @@ class _ExpenseCardState extends State<ExpenseCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.expenseTitle,
+                      widget.incomeTitle,
                       style: const TextStyle(
                         color: kWhite,
                         fontSize: 18,
@@ -84,7 +84,7 @@ class _ExpenseCardState extends State<ExpenseCard> {
                     SizedBox(
                       width: 150,
                       child: Text(
-                        widget.expenseDescription,
+                        widget.incomeDescription,
                         style: const TextStyle(
                           fontSize: 10,
                           color: kGrey,
@@ -100,7 +100,7 @@ class _ExpenseCardState extends State<ExpenseCard> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "- Rs ${widget.expenseAmount.toStringAsFixed(2)}",
+                      "- Rs ${widget.incomeAmount.toStringAsFixed(2)}",
                       style: const TextStyle(
                         fontSize: 16,
                         color: kWhite,
@@ -111,7 +111,7 @@ class _ExpenseCardState extends State<ExpenseCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          DateFormat.yMMMd().format(widget.expensedate),
+                          DateFormat.yMMMd().format(widget.incomedate),
                           style: const TextStyle(
                             fontSize: 10,
                             color: kGrey,
@@ -122,7 +122,7 @@ class _ExpenseCardState extends State<ExpenseCard> {
                           width: 10,
                         ),
                         Text(
-                          DateFormat.jm().format(widget.expensetime),
+                          DateFormat.jm().format(widget.incometime),
                           style: const TextStyle(
                             fontSize: 10,
                             color: kGrey,

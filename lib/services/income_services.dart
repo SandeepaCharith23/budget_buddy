@@ -48,7 +48,7 @@ class IncomeServices {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("Something Errror"),
+          content: Text("Something Errror in Adding income"),
           duration: Duration(seconds: 2),
         ));
       }
@@ -57,12 +57,16 @@ class IncomeServices {
 
   //A method for loading Incomes from sharedPreferences
   Future<List<Income>> loadingIncome() async {
+    //instance for shared preferences.
     SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    //get the existing Json income list with key name
     List<String>? existingJsonStringIncomeList =
         preferences.getStringList(_incomeKey);
 
     //convert this existing Json String IncomeList  to Income Object List
     List<Income> loadedIncomeObjectList = [];
+
     if (existingJsonStringIncomeList != null) {
       loadedIncomeObjectList = existingJsonStringIncomeList
           .map((e) => Income.fromJSON(json.decode(e)))
