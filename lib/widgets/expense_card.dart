@@ -53,8 +53,9 @@ class _ExpenseCardState extends State<ExpenseCard> {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: expensecategoryColrs[widget.expenseCategory]!
-                        .withOpacity(0.4),
+                    color: Colors.white,
+                    // color: expensecategoryColrs[widget.expenseCategory]!
+                    //     .withOpacity(0.4),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Padding(

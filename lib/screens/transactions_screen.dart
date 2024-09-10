@@ -10,11 +10,13 @@ class TransactionScreen extends StatefulWidget {
   final List<Expense> expenseList;
   final List<Income> incomeList;
   final void Function(Expense) onDismissedExpense;
+  final void Function(Income) onDismissedIncome;
   const TransactionScreen(
       {super.key,
       required this.expenseList,
       required this.onDismissedExpense,
-      required this.incomeList});
+      required this.incomeList,
+      required this.onDismissedIncome});
 
   @override
   State<TransactionScreen> createState() => _TransactionScreenState();
@@ -37,13 +39,82 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 "Financial report",
                 style: TextStyle(
                   fontSize: 18,
-                  color: kGreen,
+                  color: kBlack,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(
                 height: 10,
               ),
+
+              //Display Income Section
+              const Text(
+                "Your Incomes",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.green,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                        itemBuilder: (context, index) {
+                          final income = widget.incomeList[index];
+                          return Dismissible(
+                            onDismissed: (direction) {
+                              setState(() {
+                                widget.onDismissedIncome(income);
+                              });
+                            },
+                            background: Container(
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xFF4CA4ED),
+                                    Color(0xFF0722E9)
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Center(
+                                child: Icon(
+                                  size: 40,
+                                  Icons.delete,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            key: ValueKey(income),
+                            direction: DismissDirection.startToEnd,
+                            child: IncomeCard(
+                                incomeTitle: income.incomeTitle,
+                                incomeDescription: income.incomeDescription,
+                                incomeAmount: income.incomeAmount,
+                                incomeCategory: income.incomeCategory,
+                                incomedate: income.incomeDate,
+                                incometime: income.incomeTime),
+                          );
+                        },
+                        itemCount: widget.incomeList.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              //End of the Section
+
+              //Display Expense Section
               const Text(
                 "Expenses",
                 style: TextStyle(
@@ -70,6 +141,24 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             },
                             key: ValueKey(expense),
                             direction: DismissDirection.startToEnd,
+                            background: Container(
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xFF4CA4ED),
+                                    Color(0xFF0722E9)
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Center(
+                                child: Icon(
+                                  size: 40,
+                                  Icons.delete,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                             child: ExpenseCard(
                               expenseTitle: expense.expenseTitle,
                               expenseDescription: expense.expenseDescription,
@@ -92,50 +181,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
               const SizedBox(
                 height: 10,
               ),
-              const Text(
-                "Incomes",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ListView.builder(
-                        itemBuilder: (context, index) {
-                          final income = widget.incomeList[index];
-                          return Dismissible(
-                            onDismissed: (direction) {
-                              setState(() {
-                                // widget.onDismissedExpense(income);
-                              });
-                            },
-                            key: ValueKey(income),
-                            direction: DismissDirection.startToEnd,
-                            child: IncomeCard(
-                                incomeTitle: income.incomeTitle,
-                                incomeDescription: income.incomeDescription,
-                                incomeAmount: income.incomeAmount,
-                                incomeCategory: income.incomeCategory,
-                                incomedate: income.incomeDate,
-                                incometime: income.incomeTime),
-                          );
-                        },
-                        itemCount: widget.expenseList.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              //End of the Expense Section
+
+              const Divider(),
             ],
           ),
         ),

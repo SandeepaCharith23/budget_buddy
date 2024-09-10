@@ -77,7 +77,7 @@ class _IncomeCardState extends State<IncomeCard> {
                       widget.incomeTitle,
                       style: const TextStyle(
                         color: kWhite,
-                        fontSize: 18,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -100,9 +100,9 @@ class _IncomeCardState extends State<IncomeCard> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "- Rs ${widget.incomeAmount.toStringAsFixed(2)}",
+                      "+ Rs ${widget.incomeAmount.toStringAsFixed(2)}",
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 10,
                         color: kWhite,
                         fontWeight: FontWeight.bold,
                       ),

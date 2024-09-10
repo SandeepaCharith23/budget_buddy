@@ -74,4 +74,56 @@ class IncomeServices {
     }
     return loadedIncomeObjectList;
   }
+
+  //A method for delete selected income
+  Future<void> deleteIncome(int id, BuildContext context) async {
+    try {
+      //get the avaiable data from shared preferences
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      List<String>? existingIncomeStringList =
+          sharedPreferences.getStringList(_incomeKey);
+
+      //Convert the existing String List to Dart objects
+      List<Income> existingIncomeObjects = [];
+
+      if (existingIncomeStringList != null) {
+        existingIncomeObjects = existingIncomeStringList
+            .map((source) => Income.fromJSON(json.decode(source)))
+            .toList();
+      }
+
+      //remove the selected value from json object
+      existingIncomeObjects.removeWhere((income) => income.incomeId == id);
+
+      //convert again this dart object to list<string>
+      List<String> updatedIncomeStringLists = existingIncomeObjects
+          .map((source) => json.encode(source.toJSON()))
+          .toList();
+
+      //Saved updated String list to shared Preferences
+      await sharedPreferences.setStringList(
+          _incomeKey, updatedIncomeStringLists);
+
+      //display a scaffoldmessenger
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Successfully removed selected expense"),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      //display a success message
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Something error"),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    }
+  }
 }
