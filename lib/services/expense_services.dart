@@ -41,6 +41,7 @@ class ExpenseServices {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Expenses added successfully"),
           duration: Duration(seconds: 2),
+          backgroundColor: Colors.greenAccent,
         ));
       }
     } catch (error) {
@@ -49,7 +50,7 @@ class ExpenseServices {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Something Error occured"),
           duration: Duration(seconds: 2),
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.redAccent,
         ));
       }
     }
@@ -108,6 +109,7 @@ class ExpenseServices {
           const SnackBar(
             content: Text("Successfully Removed expense"),
             duration: Duration(seconds: 2),
+            backgroundColor: Colors.redAccent,
           ),
         );
       }
@@ -118,6 +120,7 @@ class ExpenseServices {
           const SnackBar(
             content: Text("Something error"),
             duration: Duration(seconds: 2),
+            backgroundColor: Colors.redAccent,
           ),
         );
       }

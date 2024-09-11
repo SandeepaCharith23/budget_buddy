@@ -53,9 +53,8 @@ class _ExpenseCardState extends State<ExpenseCard> {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    // color: expensecategoryColrs[widget.expenseCategory]!
-                    //     .withOpacity(0.4),
+                    color: expensecategoryColrs[widget.expenseCategory]!
+                        .withOpacity(0.4),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Padding(
@@ -78,7 +77,7 @@ class _ExpenseCardState extends State<ExpenseCard> {
                       widget.expenseTitle,
                       style: const TextStyle(
                         color: kWhite,
-                        fontSize: 18,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -103,7 +102,7 @@ class _ExpenseCardState extends State<ExpenseCard> {
                     Text(
                       "- Rs ${widget.expenseAmount.toStringAsFixed(2)}",
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 10,
                         color: kWhite,
                         fontWeight: FontWeight.bold,
                       ),

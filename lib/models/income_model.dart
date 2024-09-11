@@ -1,17 +1,14 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 enum IncomeCategory {
-  salary,
-  wages,
-  business,
-  freelance,
-  investments,
-  rentals,
-  pensions,
-  befits,
-  grants,
-  scholoarships,
-  miscellaneous,
+  Salary,
+  Business_investments,
+  Freelance,
+  Grants,
+  Scholoarships,
+  Miscellaneous,
 }
 
 class Income {
@@ -61,29 +58,19 @@ class Income {
 
 //category images
 final Map<IncomeCategory, String> incomeCategoryImages = {
-  IncomeCategory.befits: "assets/icons/income_icon.png",
-  IncomeCategory.salary: "assets/icons/income_icon.png",
-  IncomeCategory.business: "assets/icons/income_icon.png",
-  IncomeCategory.freelance: "assets/icons/income_icon.png",
-  IncomeCategory.grants: "assets/icons/income_icon.png",
-  IncomeCategory.investments: "assets/icons/income_icon.png",
-  IncomeCategory.miscellaneous: "assets/icons/income_icon.png",
-  IncomeCategory.pensions: "assets/icons/income_icon.png",
-  IncomeCategory.rentals: "assets/icons/income_icon.png",
-  IncomeCategory.scholoarships: "assets/icons/income_icon.png",
-  IncomeCategory.wages: "assets/icons/income_icon.png",
+  IncomeCategory.Business_investments: "assets/icons/business_investments.png",
+  IncomeCategory.Freelance: "assets/icons/freelance_works.png",
+  IncomeCategory.Grants: "assets/icons/grants_income.png",
+  IncomeCategory.Miscellaneous: "assets/icons/miscellaneous_income.png",
+  IncomeCategory.Salary: "assets/icons/salary_income.png",
+  IncomeCategory.Scholoarships: "assets/icons/scholarships.png",
 };
 
 final Map<IncomeCategory, Color> incomeCategoryColors = {
-  IncomeCategory.befits: const Color(0xFFE57373),
-  IncomeCategory.salary: const Color(0xFF8E2828),
-  IncomeCategory.business: const Color(0xFF73E5B7),
-  IncomeCategory.freelance: const Color(0xFF741F1F),
-  IncomeCategory.grants: const Color(0xFFE5B573),
-  IncomeCategory.investments: const Color(0xFFBFEC09),
-  IncomeCategory.miscellaneous: const Color(0xFF035E36),
-  IncomeCategory.pensions: const Color(0xFF45ACE7),
-  IncomeCategory.rentals: const Color(0xFF431081),
-  IncomeCategory.scholoarships: const Color(0xFFE573DB),
-  IncomeCategory.wages: const Color(0xFF120320),
+  IncomeCategory.Business_investments: const Color(0xFFB9ACE8),
+  IncomeCategory.Freelance: const Color(0xFFB9ACE8),
+  IncomeCategory.Grants: const Color(0xFFB9ACE8),
+  IncomeCategory.Miscellaneous: const Color(0xFFB9ACE8),
+  IncomeCategory.Salary: const Color(0xFFB9ACE8),
+  IncomeCategory.Scholoarships: const Color(0xFFB9ACE8),
 };

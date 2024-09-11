@@ -42,6 +42,7 @@ class IncomeServices {
           const SnackBar(
             content: Text("New Income details saved successfully"),
             duration: Duration(seconds: 2),
+            backgroundColor: Colors.greenAccent,
           ),
         );
       }
@@ -50,6 +51,7 @@ class IncomeServices {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Something Errror in Adding income"),
           duration: Duration(seconds: 2),
+          backgroundColor: Colors.redAccent,
         ));
       }
     }
@@ -111,6 +113,7 @@ class IncomeServices {
           const SnackBar(
             content: Text("Successfully removed selected expense"),
             duration: Duration(seconds: 2),
+            backgroundColor: Colors.redAccent,
           ),
         );
       }
@@ -121,6 +124,7 @@ class IncomeServices {
           const SnackBar(
             content: Text("Something error"),
             duration: Duration(seconds: 2),
+            backgroundColor: Colors.redAccent,
           ),
         );
       }

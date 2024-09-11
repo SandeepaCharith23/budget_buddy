@@ -1,16 +1,14 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 enum ExpenseCategory {
-  housing,
-  transportation,
-  foods,
-  healthandWellness,
-  entertainmentandRecreation,
-  education,
-  personalAndFamilyCare,
-  insurance,
-  giftsandDonations,
-  miscellaneous,
+  Miscellaneous,
+  Living_Expenses,
+  Transportation,
+  Food_Wellness,
+  Lifestyle_Leisure,
+  Education_Insurance
 }
 
 class Expense {
@@ -59,27 +57,19 @@ class Expense {
 }
 
 final Map<ExpenseCategory, String> expensecategoryImages = {
-  ExpenseCategory.education: "assets/icons/expense_icon.png",
-  ExpenseCategory.entertainmentandRecreation: "assets/icons/expense_icon.png",
-  ExpenseCategory.foods: "assets/icons/expense_icon.png",
-  ExpenseCategory.giftsandDonations: "assets/icons/expense_icon.png",
-  ExpenseCategory.healthandWellness: "assets/icons/expense_icon.png",
-  ExpenseCategory.housing: "assets/icons/expense_icon.png",
-  ExpenseCategory.insurance: "assets/icons/expense_icon.png",
-  ExpenseCategory.miscellaneous: "assets/icons/expense_icon.png",
-  ExpenseCategory.personalAndFamilyCare: "assets/icons/expense_icon.png",
-  ExpenseCategory.transportation: "assets/icons/expense_icon.png",
+  ExpenseCategory.Education_Insurance: "assets/icons/education.png",
+  ExpenseCategory.Food_Wellness: "assets/icons/food_wellness.png",
+  ExpenseCategory.Lifestyle_Leisure: "assets/icons/lifestyle_leisure.png",
+  ExpenseCategory.Living_Expenses: "assets/icons/living_expenses.png",
+  ExpenseCategory.Miscellaneous: "assets/icons/miscellaneous.png",
+  ExpenseCategory.Transportation: "assets/icons/transportation.png",
 };
 
 final Map<ExpenseCategory, Color> expensecategoryColrs = {
-  ExpenseCategory.education: const Color(0xFFB9ACE8),
-  ExpenseCategory.entertainmentandRecreation: const Color(0xFF000000),
-  ExpenseCategory.foods: const Color(0xFF000000),
-  ExpenseCategory.giftsandDonations: const Color(0xFF000000),
-  ExpenseCategory.healthandWellness: const Color(0xFF000000),
-  ExpenseCategory.housing: const Color(0xFF000000),
-  ExpenseCategory.insurance: const Color(0xFF000000),
-  ExpenseCategory.miscellaneous: const Color(0xFF000000),
-  ExpenseCategory.personalAndFamilyCare: const Color(0xFF000000),
-  ExpenseCategory.transportation: const Color(0xFF000000),
+  ExpenseCategory.Education_Insurance: const Color(0xFFB9ACE8),
+  ExpenseCategory.Food_Wellness: const Color(0xFFB9ACE8),
+  ExpenseCategory.Lifestyle_Leisure: const Color(0xFFB9ACE8),
+  ExpenseCategory.Living_Expenses: const Color(0xFFB9ACE8),
+  ExpenseCategory.Miscellaneous: const Color(0xFFB9ACE8),
+  ExpenseCategory.Transportation: const Color(0xFFB9ACE8),
 };

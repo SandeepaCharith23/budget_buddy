@@ -26,8 +26,8 @@ class _AddnewScreenState extends State<AddnewScreen> {
 
   //A variable for saved selected category
   ExpenseCategory expenseCategory =
-      ExpenseCategory.miscellaneous; //default value;
-  IncomeCategory incomeCategory = IncomeCategory.miscellaneous;
+      ExpenseCategory.Miscellaneous; //default value;
+  IncomeCategory incomeCategory = IncomeCategory.Miscellaneous;
 
   //TextEditing Controllers
   final TextEditingController _titleController = TextEditingController();
