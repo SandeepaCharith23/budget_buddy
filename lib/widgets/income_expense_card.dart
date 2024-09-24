@@ -46,15 +46,15 @@ class _IncomeExpensCardState extends State<IncomeExpenseCard> {
                   widget.cardTitle,
                   style: const TextStyle(
                     color: kWhite,
-                    fontSize: 12,
+                    fontSize: 10,
                   ),
                 ),
                 Text(
-                  "Rs ${widget.cardAmout.toString()}",
+                  "Rs ${widget.cardAmout.toStringAsFixed(2)}",
                   style: const TextStyle(
                     color: kWhite,
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 10,
                   ),
                 ),
               ],

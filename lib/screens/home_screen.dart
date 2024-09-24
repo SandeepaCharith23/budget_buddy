@@ -23,6 +23,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   //for storing the username
   String savedusername = "";
+  double incomeTotal = 0.0;
+  double expenseTotal = 0.0;
 
   @override
   void initState() {
@@ -35,6 +37,16 @@ class _HomeScreenState extends State<HomeScreen> {
         // if (kDebugMode) {
         //   print(savedusername);
         // }
+      }
+    });
+
+    //calculate total income amount and expense amaout of the user
+    setState(() {
+      for (var i = 0; i < widget.incomeList.length; i++) {
+        incomeTotal += widget.incomeList[i].incomeAmount;
+      }
+      for (var i = 0; i < widget.expenseList.length; i++) {
+        expenseTotal += widget.expenseList[i].expenseAmount;
       }
     });
     super.initState();
@@ -117,20 +129,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
 
                     //Expense card summary card and Income Card summary.
-                    const Row(
+                    Row(
                       children: [
                         IncomeExpenseCard(
                           cardTitle: 'Income',
-                          cardAmout: 275.00,
+                          cardAmout: incomeTotal,
                           cardImageUrl: "assets/icons/income_icon.png",
                           cardBgColor: kGreen,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         IncomeExpenseCard(
                           cardTitle: 'Expense',
-                          cardAmout: 275.00,
+                          cardAmout: expenseTotal,
                           cardImageUrl: "assets/icons/income_icon.png",
                           cardBgColor: kRed,
                         ),
