@@ -11,3 +11,5 @@ const Color kRed = Color(0xFFFD3C4A);
 const Color kYellow = Color(0xFFFCAC12);
 const Color kLightYellow = Color(0xFFF9DB9F);
 const Color kOrange = Color(0xFFFFCF99);
+const Color kexpenseLineChartgradientcolor01 = Color(0xFFF44A48);
+const Color kexpenseLineChartgradientcolor02 = Color(0xFFB92E04);

@@ -1,6 +1,7 @@
 import 'package:budget_buddy/models/expense_model.dart';
 import 'package:budget_buddy/models/income_model.dart';
 import 'package:budget_buddy/utils/colors.dart';
+import 'package:budget_buddy/utils/constants.dart';
 import 'package:budget_buddy/widgets/expense_card.dart';
 import 'package:budget_buddy/widgets/income_card.dart';
 
@@ -64,49 +65,61 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      ListView.builder(
-                        itemBuilder: (context, index) {
-                          final income = widget.incomeList[index];
-                          return Dismissible(
-                            onDismissed: (direction) {
-                              setState(() {
-                                widget.onDismissedIncome(income);
-                              });
-                            },
-                            background: Container(
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xFF4CA4ED),
-                                    Color(0xFF0722E9)
-                                  ],
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  size: 40,
-                                  Icons.delete,
-                                  color: Colors.white,
+                      //Display listview or display error msg
+                      widget.incomeList.isEmpty
+                          ? const Center(
+                              child: Text(
+                                "There are no recent incomes to display ,Please add some incomes details here",
+                                style: TextStyle(
+                                  fontSize: kdefaultsubheadingfontsize,
+                                  color: kGrey,
                                 ),
                               ),
+                            )
+                          : ListView.builder(
+                              itemBuilder: (context, index) {
+                                final income = widget.incomeList[index];
+                                return Dismissible(
+                                  onDismissed: (direction) {
+                                    setState(() {
+                                      widget.onDismissedIncome(income);
+                                    });
+                                  },
+                                  background: Container(
+                                    decoration: BoxDecoration(
+                                      gradient: const LinearGradient(
+                                        colors: [
+                                          Color(0xFF4CA4ED),
+                                          Color(0xFF0722E9)
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: const Center(
+                                      child: Icon(
+                                        size: 40,
+                                        Icons.delete,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  key: ValueKey(income),
+                                  direction: DismissDirection.startToEnd,
+                                  child: IncomeCard(
+                                      incomeTitle: income.incomeTitle,
+                                      incomeDescription:
+                                          income.incomeDescription,
+                                      incomeAmount: income.incomeAmount,
+                                      incomeCategory: income.incomeCategory,
+                                      incomedate: income.incomeDate,
+                                      incometime: income.incomeTime),
+                                );
+                              },
+                              itemCount: widget.incomeList.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
                             ),
-                            key: ValueKey(income),
-                            direction: DismissDirection.startToEnd,
-                            child: IncomeCard(
-                                incomeTitle: income.incomeTitle,
-                                incomeDescription: income.incomeDescription,
-                                incomeAmount: income.incomeAmount,
-                                incomeCategory: income.incomeCategory,
-                                incomedate: income.incomeDate,
-                                incometime: income.incomeTime),
-                          );
-                        },
-                        itemCount: widget.incomeList.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                      ),
                     ],
                   ),
                 ),
@@ -130,50 +143,61 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      ListView.builder(
-                        itemBuilder: (context, index) {
-                          final expense = widget.expenseList[index];
-                          return Dismissible(
-                            onDismissed: (direction) {
-                              setState(() {
-                                widget.onDismissedExpense(expense);
-                              });
-                            },
-                            key: ValueKey(expense),
-                            direction: DismissDirection.startToEnd,
-                            background: Container(
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xFF4CA4ED),
-                                    Color(0xFF0722E9)
-                                  ],
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  size: 40,
-                                  Icons.delete,
-                                  color: Colors.white,
+                      widget.expenseList.isEmpty
+                          ? const Center(
+                              child: Text(
+                                "There are no recent expense to display ,Please add some expense details here",
+                                style: TextStyle(
+                                  fontSize: kdefaultsubheadingfontsize,
+                                  color: kGrey,
                                 ),
                               ),
+                            )
+                          : ListView.builder(
+                              itemBuilder: (context, index) {
+                                final expense = widget.expenseList[index];
+                                return Dismissible(
+                                  onDismissed: (direction) {
+                                    setState(() {
+                                      widget.onDismissedExpense(expense);
+                                    });
+                                  },
+                                  key: ValueKey(expense),
+                                  direction: DismissDirection.startToEnd,
+                                  background: Container(
+                                    decoration: BoxDecoration(
+                                      gradient: const LinearGradient(
+                                        colors: [
+                                          Color(0xFF4CA4ED),
+                                          Color(0xFF0722E9)
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: const Center(
+                                      child: Icon(
+                                        size: 40,
+                                        Icons.delete,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  child: ExpenseCard(
+                                    expenseTitle: expense.expenseTitle,
+                                    expenseDescription:
+                                        expense.expenseDescription,
+                                    expenseAmount: expense.expenseAmount,
+                                    expenseCategory: expense.expenseCategory,
+                                    expensedate: expense.expenseDate,
+                                    expensetime: expense.expenseTime,
+                                  ),
+                                );
+                              },
+                              itemCount: widget.expenseList.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
                             ),
-                            child: ExpenseCard(
-                              expenseTitle: expense.expenseTitle,
-                              expenseDescription: expense.expenseDescription,
-                              expenseAmount: expense.expenseAmount,
-                              expenseCategory: expense.expenseCategory,
-                              expensedate: expense.expenseDate,
-                              expensetime: expense.expenseTime,
-                            ),
-                          );
-                        },
-                        itemCount: widget.expenseList.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                      ),
                     ],
                   ),
                 ),

@@ -1,11 +1,20 @@
+import 'package:budget_buddy/models/expense_model.dart';
+import 'package:budget_buddy/models/income_model.dart';
 import 'package:budget_buddy/services/user_services.dart';
 import 'package:budget_buddy/utils/colors.dart';
+import 'package:budget_buddy/utils/constants.dart';
+import 'package:budget_buddy/widgets/expense_card.dart';
+import 'package:budget_buddy/widgets/income_card.dart';
 import 'package:budget_buddy/widgets/income_expense_card.dart';
+import 'package:budget_buddy/widgets/line_chart_sample.dart';
 
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final List<Expense> expenseList;
+  final List<Income> incomeList;
+  const HomeScreen(
+      {super.key, required this.expenseList, required this.incomeList});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -38,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SingleChildScrollView(
         //main column
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //01.user details and Tile Section
             Container(
@@ -106,6 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 35,
                     ),
 
+                    //Expense card summary card and Income Card summary.
                     const Row(
                       children: [
                         IncomeExpenseCard(
@@ -127,6 +138,116 @@ class _HomeScreenState extends State<HomeScreen> {
                     )
                   ],
                 ),
+              ),
+            ),
+
+            const Divider(),
+            //
+            Padding(
+              padding: const EdgeInsets.all(kdefaultpadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Here's how you spend your expenses...",
+                    style: TextStyle(
+                      fontSize: kdefaultsubheadingfontsize,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  //Line chart for user expenses
+                  const LineChartSample(),
+
+                  //Display section of recent Transactions
+                  const Text(
+                    "Your recent transactions...",
+                    style: TextStyle(
+                      fontSize: kdefaultsubheadingfontsize,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+                  //recent transactions listview
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Your recent expenses...",
+                        style: TextStyle(
+                          fontSize: kdefaultsubheadingfontsize,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      widget.expenseList.isEmpty
+                          ? const Center(
+                              child: Text(
+                                "There are no recent expense to display ,Please add some expense details here",
+                                style: TextStyle(
+                                  fontSize: kdefaultsubheadingfontsize,
+                                  color: kGrey,
+                                ),
+                              ),
+                            )
+                          : ListView.builder(
+                              itemBuilder: (context, index) {
+                                final expense = widget.expenseList[index];
+                                return ExpenseCard(
+                                  expenseTitle: expense.expenseTitle,
+                                  expenseDescription:
+                                      expense.expenseDescription,
+                                  expenseAmount: expense.expenseAmount,
+                                  expenseCategory: expense.expenseCategory,
+                                  expensedate: expense.expenseDate,
+                                  expensetime: expense.expenseTime,
+                                );
+                              },
+                              itemCount: widget.expenseList.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                            ),
+                      const Divider(),
+                      const Text(
+                        "Your recent Incomes...",
+                        style: TextStyle(
+                          fontSize: kdefaultsubheadingfontsize,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      widget.incomeList.isEmpty
+                          ? const Center(
+                              child: Text(
+                                "There are no recent incomes to display ,Please add some income details here",
+                                style: TextStyle(
+                                  fontSize: kdefaultsubheadingfontsize,
+                                  color: kGrey,
+                                ),
+                              ),
+                            )
+                          : ListView.builder(
+                              itemBuilder: (context, index) {
+                                final income = widget.incomeList[index];
+                                return IncomeCard(
+                                    incomeTitle: income.incomeTitle,
+                                    incomeDescription: income.incomeDescription,
+                                    incomeAmount: income.incomeAmount,
+                                    incomeCategory: income.incomeCategory,
+                                    incomedate: income.incomeDate,
+                                    incometime: income.incomeTime);
+                              },
+                              itemCount: widget.incomeList.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                            ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],
